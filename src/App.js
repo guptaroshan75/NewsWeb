@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import Navbar from "./component/Navbar";
+import Card from "./component/Card";
 
-function App() {
+const App = () => {
+  const [newsData, setNewsData] = useState([])
+  const fetchNewsDetail = async () => {
+    try {
+      const responObj = await fetch("https://newsapi.org/v2/top-headlines?country=in&apiKey=64b731bb9ef245ed99ca3e1628d206fd");
+      const data = await responObj.json();
+      console.log(data.articles)
+      setNewsData(data.articles);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchNewsDetail();
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar />
+      <Card newsData={newsData} />
+    </>
   );
 }
 
