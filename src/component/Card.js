@@ -6,7 +6,7 @@ const Card = ({ newsData }) => {
         <div className="container">
             <div className="mt-4 news-container">
                 {
-                    newsData.map((details) => {
+                    newsData?.map((details) => {
                         return (
                             <>
                                 {
