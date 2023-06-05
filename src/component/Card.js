@@ -1,36 +1,50 @@
 import React from "react";
+import { Button, Card, CardActions, CardContent, CardMedia, Typography, Link, Grid, Box } from '@mui/material';
+import { AspectRatio } from '@mui/joy';
+import { Link as RouterLink } from 'react-router-dom';
 
-const Card = ({ newsData }) => {
-
-    return (
-        <div className="container">
-            <div className="mt-4 news-container">
-                {
-                    newsData?.map((details) => {
-                        return (
-                            <>
-                                {
-                                    details.urlToImage && (
-                                        <div className="card p-2" key={details?.title} >
-                                            <img src={details?.urlToImage} className="w-100 h-100" />
-                                            <div className="card-body">
-                                                <h5 className="card-title">{details?.author}</h5>
-                                                <p className="card-text text-justify" style={{
-                                                    textAlign: 'justify'
-                                                }}>{details?.description}</p>
-                                                
-                                            </div>
-                                            <a href={details?.url} target="_blanks" className="btn btn-primary w-100">Read More</a>
-                                        </div>
-                                    )
-                                }
-                            </>
-                        )
-                    })
-                }
-            </div>
-        </div>
-    );
+const ProductCard = ({ newsData }) => {
+  return (
+    <Box>
+      <Grid container spacing={3}>
+        {
+          newsData?.map((details) => {
+            console.log(details.urlToImage && details.author);
+            return (
+                (details.urlToImage ) && (
+                  <Grid item xs={12} sm={6} md={4} lg={4} key={details?.title} >
+                  {
+      
+                      <Card>
+                        <AspectRatio color={'#fff'} sx={{ padding: 1 }}>
+                            <CardMedia component={'img'} image={details?.urlToImage} alt={details?.description} />
+                        </AspectRatio>
+                        <CardContent>
+                          <Typography gutterBottom variant="h5" sx={{ overflow: 'hidden', textOverflow: 'ellipsis', 
+                            display: '-webkit-box', WebkitLineClamp: '2', WebkitBoxOrient: 'vertical' }}  component="div"
+                          > {details?.title} </Typography>
+                          <Typography sx={{
+                            overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box',
+                            WebkitLineClamp: '2',
+                            WebkitBoxOrient: 'vertical'
+                          }}
+                            gutterBottom variant='h6'> {details?.description} </Typography>
+                        </CardContent>
+                        <CardActions>
+                          <Button size="small" variant={'contained'} fullWidth>
+                            <Link component={RouterLink} to={details?.url} target="_blanks" sx={{ textDecoration: 'none', color: 'white' }} >Read More</Link>
+                          </Button>
+                        </CardActions>
+                      </Card>
+                  }
+                </Grid>
+                )
+            )
+          })
+        }
+      </Grid>
+    </Box>
+  );
 }
 
-export default Card;
+export default ProductCard;
